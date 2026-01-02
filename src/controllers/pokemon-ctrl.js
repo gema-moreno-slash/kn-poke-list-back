@@ -14,11 +14,17 @@ function postPokemon(req, res) {
 
 function getPokemonList(req, res) {
   const { limit, skip } = req.query;
-  PokemonModel.find()
-    .skip(Number(skip) || 0)
-    .limit(Number(limit) || 10)
-    .then((pokeList) => {
-      res.status(200).json(pokeList);
+  const pageLimit = Number(limit) || 10;
+  const pageSkip = Number(skip) || 0;
+  Promise.all([
+    PokemonModel.find().skip(pageSkip).limit(pageLimit),
+    PokemonModel.countDocuments()
+  ])
+    .then(([pokeList, count]) => {
+      res.status(200).json({
+        count,
+        results: pokeList
+      });
     })
     .catch((error) => {
       res.status(500).json({ error: 'Failed to fetch Pokemon list', details: error });
