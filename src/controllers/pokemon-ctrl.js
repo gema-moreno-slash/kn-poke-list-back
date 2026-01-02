@@ -12,6 +12,20 @@ function postPokemon(req, res) {
     });
 };
 
+function getPokemonList(req, res) {
+  const { limit, skip } = req.query;
+  PokemonModel.find()
+    .skip(Number(skip) || 0)
+    .limit(Number(limit) || 10)
+    .then((pokeList) => {
+      res.status(200).json(pokeList);
+    })
+    .catch((error) => {
+      res.status(500).json({ error: 'Failed to fetch Pokemon list', details: error });
+    });
+}
+
 export default {
   postPokemon,
+  getPokemonList
 };
