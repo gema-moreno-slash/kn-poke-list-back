@@ -1,10 +1,15 @@
 import { Router } from 'express';
-import pokemonCtrl from '../controllers/pokemon-ctrl.js';
+import {
+    postPokemon,
+    getPokemon,
+    getPokemonList
+} from '../controllers/pokemon-ctrl.js';
 import { paramListMid, pokeMid } from '../middlewares/poke-mid.js';
 
 const router = Router();
 
-router.post('/', pokeMid, pokemonCtrl.postPokemon);
-router.get('/', paramListMid, pokemonCtrl.getPokemonList);
+router.post('/', pokeMid, postPokemon);
+router.get('/', paramListMid, getPokemon);
+router.get('/list', paramListMid, getPokemonList);
 
 export default router;
