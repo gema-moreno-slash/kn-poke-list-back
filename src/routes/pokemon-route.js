@@ -9,7 +9,8 @@ import { paramListMid, pokeMid } from '../middlewares/poke-mid.js';
 const router = Router();
 
 router.post('/', pokeMid, postPokemon);
-router.get('/', paramListMid, getPokemon);
 router.get('/list', paramListMid, getPokemonList);
+router.get('/:id', getPokemon);
+
 
 export default router;

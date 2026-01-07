@@ -15,12 +15,12 @@ function postPokemon(req, res) {
 
 function getPokemon(req, res) {
   const { id } = req.params;
-  PokemonModel.findOne(id)
+  PokemonModel.findOne({id})
     .then(doc => {
       doc ? res.status(200).json(doc) : res.status(404).json({ error: 'Pokemon not found' });
     })
     .catch((error) => {
-      res.status(500).json({ error: 'Failed to fetch Pokemon list', details: error });
+      res.status(500).json({ error: 'Failed to fetch Pokemon', details: error });
     });
 }
 
